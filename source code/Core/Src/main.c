@@ -121,9 +121,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  int hour = 0;
-	   int minute = 5;
-	   int second = 15;
+	  int hour = 6;
+	   int minute = 55;
+	   int second = 0;
 
 	   while(1) {
 	       second++;
@@ -145,7 +145,7 @@ int main(void)
 	       setNumberOnClock(minute / 5);
 	       setNumberOnClock(second / 5);
 
-	       HAL_Delay(1000);
+	       HAL_Delay(10);
 	   }
     /* USER CODE BEGIN 3 */
   }
