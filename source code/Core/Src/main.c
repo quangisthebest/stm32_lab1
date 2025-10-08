@@ -61,6 +61,33 @@ static void MX_GPIO_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+//pin array
+const uint16_t clockPins[] = {
+    GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_6, GPIO_PIN_7,
+    GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11,
+    GPIO_PIN_12, GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15
+};
+
+// ex7
+void clearAllClock() {
+    for (int i = 0; i < 12; i++) {
+        HAL_GPIO_WritePin(GPIOA, clockPins[i], GPIO_PIN_SET);
+    }
+}
+
+// ex8
+void setNumberOnClock(int num) {
+    if (num >= 0 && num < 12) {
+        HAL_GPIO_WritePin(GPIOA, clockPins[num], GPIO_PIN_RESET);
+    }
+}
+
+// ex9
+void clearNumberOnClock(int num) {
+    if (num >= 0 && num < 12) {
+        HAL_GPIO_WritePin(GPIOA, clockPins[num], GPIO_PIN_SET);
+    }
+}
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -94,13 +121,32 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  for (int i = 4; i <= 15; i++) {
+	  int hour = 0;
+	   int minute = 0;
+	   int second = 0;
 
-	      HAL_GPIO_WritePin(GPIOA, 1<<i, GPIO_PIN_RESET);
-	      HAL_Delay(500);
+	   while(1) {
+	       second++;
+	       if (second >= 60) {
+	           second = 0;
+	           minute++;
+	       }
+	       if (minute >= 60) {
+	           minute = 0;
+	           hour++;
+	       }
+	       if (hour >= 12) {
+	           hour = 0;
+	       }
 
-	      HAL_GPIO_WritePin(GPIOA, 1<<i, GPIO_PIN_SET);
-	    }
+	       clearAllClock();
+
+	       setNumberOnClock(hour);
+	       setNumberOnClock(minute / 5);
+	       setNumberOnClock(second / 5);
+
+	       HAL_Delay(1000);
+	   }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
