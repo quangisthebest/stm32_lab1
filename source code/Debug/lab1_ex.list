@@ -187,11 +187,11 @@ int main(void)
 	  int hour = 0;
  80001d2:	2300      	movs	r3, #0
  80001d4:	60fb      	str	r3, [r7, #12]
-	   int minute = 0;
- 80001d6:	2300      	movs	r3, #0
+	   int minute = 5;
+ 80001d6:	2305      	movs	r3, #5
  80001d8:	60bb      	str	r3, [r7, #8]
-	   int second = 0;
- 80001da:	2300      	movs	r3, #0
+	   int second = 15;
+ 80001da:	230f      	movs	r3, #15
  80001dc:	607b      	str	r3, [r7, #4]
 
 	   while(1) {

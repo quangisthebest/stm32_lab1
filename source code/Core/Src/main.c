@@ -122,8 +122,8 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  int hour = 0;
-	   int minute = 0;
-	   int second = 0;
+	   int minute = 5;
+	   int second = 15;
 
 	   while(1) {
 	       second++;
