@@ -38,6 +38,31 @@ static void MX_GPIO_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+void display7SEG(int num) {
+    char segments[10] = {
+        0b11000000,  // 0: a,b,c,d,e,f sáng
+        0b11111001,  // 1: b,c sáng
+        0b10100100,  // 2: a,b,d,e,g sáng
+        0b10110000,  // 3: a,b,c,d,g sáng
+        0b10011001,  // 4: b,c,f,g sáng
+        0b10010010,  // 5: a,c,d,f,g sáng
+        0b10000010,  // 6: a,c,d,e,f,g sáng
+        0b11111000,  // 7: a,b,c sáng
+        0b10000000,  // 8: a,b,c,d,e,f,g sáng
+        0b10010000   // 9: a,b,c,d,f,g sáng
+    };
+
+    if (num >= 0 && num <= 9) {
+        char code = segments[num];
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, (code >> 0) & 0x01); //a
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, (code >> 1) & 0x01); // b
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, (code >> 2) & 0x01); // c
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, (code >> 3) & 0x01); //d
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, (code >> 4) & 0x01); //e
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, (code >> 5) & 0x01); //f
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, (code >> 6) & 0x01); //g
+    }
+}
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -64,6 +89,67 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+      while (1) {
+      	// --- PHA 1: Hướng 1 ĐỎ (5s) - Hướng 2 XANH (3s) ---
+      	// Cài đặt trạng thái đèn
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);   // Đỏ 1 ON
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); // Vàng 1 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); // Xanh 1 OFF
+
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET); // Đỏ 2 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Vàng 2 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);  // Xanh 2 ON
+
+      	// Đếm ngược thời gian của đèn Xanh 2 (3 giây)
+      	// Lúc này LED 7 đoạn hiển thị: 3 -> 2 -> 1
+      	int counter = 3;
+      	while(counter > 0) {
+      		display7SEG(counter--);
+      		HAL_Delay(1000);
+      	}
+
+      	// --- PHA 2: Hướng 1 ĐỎ (tiếp 2s) - Hướng 2 VÀNG (2s) ---
+      	// Đèn hướng 1 giữ nguyên Đỏ. Đèn hướng 2 chuyển sang Vàng.
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Xanh 2 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);    // Vàng 2 ON
+
+      	// Đếm ngược thời gian đèn Vàng 2 (2 giây)
+      	// Lúc này LED 7 đoạn hiển thị: 2 -> 1
+      	counter = 2;
+      	while(counter > 0) {
+      		display7SEG(counter--);
+      		HAL_Delay(1000);
+      	}
+
+      	// --- PHA 3: Hướng 1 XANH (3s) - Hướng 2 ĐỎ (5s) ---
+      	// Đèn hướng 1 chuyển Xanh. Đèn hướng 2 chuyển Đỏ.
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Đỏ 1 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);   // Xanh 1 ON
+
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Vàng 2 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);   // Đỏ 2 ON
+
+      	// Đếm ngược thời gian đèn Xanh 1 (3 giây)
+      	counter = 3;
+      	while(counter > 0) {
+      		display7SEG(counter--);
+      		HAL_Delay(1000);
+      	}
+
+      	// --- PHA 4: Hướng 1 VÀNG (2s) - Hướng 2 ĐỎ (tiếp 2s) ---
+      	// Đèn hướng 1 chuyển Vàng. Đèn hướng 2 giữ nguyên Đỏ.
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); // Xanh 1 OFF
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);   // Vàng 1 ON
+
+      	// Đếm ngược thời gian đèn Vàng 1 (2 giây)
+      	counter = 2;
+      	while(counter > 0) {
+      		display7SEG(counter--);
+      		HAL_Delay(1000);
+      	}
+      }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
