@@ -91,58 +91,44 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
       while (1) {
-      	// --- PHA 1: Hướng 1 ĐỎ (5s) - Hướng 2 XANH (3s) ---
-      	// Cài đặt trạng thái đèn
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);   // Đỏ 1 ON
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); // Vàng 1 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); // Xanh 1 OFF
 
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET); // Đỏ 2 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Vàng 2 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);  // Xanh 2 ON
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
 
-      	// Đếm ngược thời gian của đèn Xanh 2 (3 giây)
-      	// Lúc này LED 7 đoạn hiển thị: 3 -> 2 -> 1
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
+
       	int counter = 3;
       	while(counter > 0) {
       		display7SEG(counter--);
       		HAL_Delay(1000);
       	}
 
-      	// --- PHA 2: Hướng 1 ĐỎ (tiếp 2s) - Hướng 2 VÀNG (2s) ---
-      	// Đèn hướng 1 giữ nguyên Đỏ. Đèn hướng 2 chuyển sang Vàng.
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Xanh 2 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);    // Vàng 2 ON
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
 
-      	// Đếm ngược thời gian đèn Vàng 2 (2 giây)
-      	// Lúc này LED 7 đoạn hiển thị: 2 -> 1
       	counter = 2;
       	while(counter > 0) {
       		display7SEG(counter--);
       		HAL_Delay(1000);
       	}
 
-      	// --- PHA 3: Hướng 1 XANH (3s) - Hướng 2 ĐỎ (5s) ---
-      	// Đèn hướng 1 chuyển Xanh. Đèn hướng 2 chuyển Đỏ.
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Đỏ 1 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);   // Xanh 1 ON
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
 
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Vàng 2 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);   // Đỏ 2 ON
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 
-      	// Đếm ngược thời gian đèn Xanh 1 (3 giây)
       	counter = 3;
       	while(counter > 0) {
       		display7SEG(counter--);
       		HAL_Delay(1000);
       	}
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
 
-      	// --- PHA 4: Hướng 1 VÀNG (2s) - Hướng 2 ĐỎ (tiếp 2s) ---
-      	// Đèn hướng 1 chuyển Vàng. Đèn hướng 2 giữ nguyên Đỏ.
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); // Xanh 1 OFF
-      	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);   // Vàng 1 ON
-
-      	// Đếm ngược thời gian đèn Vàng 1 (2 giây)
       	counter = 2;
       	while(counter > 0) {
       		display7SEG(counter--);
